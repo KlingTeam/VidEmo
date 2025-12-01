@@ -28,15 +28,14 @@
 
 <!-- Institution -->
 <div class="is-size-5 publication-authors">
-<sup>1</sup><span class="author-block">Nankai University</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<sup>2</sup><span class="author-block">Pengcheng Laboratory</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<sup>3</sup><span class="author-block">Kuaishou Technology</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <sup>1</sup><span class="author-block">Nankai University</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <sup>2</sup><span class="author-block">Pengcheng Laboratory</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <sup>3</sup><span class="author-block">Kuaishou Technology</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
-
 <div class="is-size-5 publication-authors">
-<sup>†</sup><span class="author-block">Work done at KlingAI</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<sup>‡</sup><span class="author-block">Project Leader</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<sup>✉</sup><span class="author-block">Corresponding Author</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <sup>†</sup><span class="author-block">Work done at KlingAI</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <sup>‡</sup><span class="author-block">Project Leader</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <sup>✉</sup><span class="author-block">Corresponding Author</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
 
 
@@ -118,7 +117,49 @@ TBD
 
 ### 🔮 5.3: Evaluation
 
-TBD
+### Demonstration
+
+```
+├─ config.py # GPT configuration
+├─ eval_results.py # Evaluation scripts
+├─ generate_table.py # CSV & table generator
+├─ util.py # Utility functions
+```
+
+1. Modify the LLM configuration in `config.py`
+
+   - Modify `API_KEY` to your API key
+   - Modify `BASE_URL` to your LLM's base URL
+   - We recommend setting `MODEL_NAME` to `gpt-4o-2024-08-06` to better align with the reported results.
+
+2. Execute the evaluation scripts
+
+   ```sh
+   python -m eval_face.eval_results \
+   	--input_dir "Path/to/the/input/directory" \
+   	--method "method name, e.g. models--Qwen--Qwen2.5-VL-7B-Instruct" \
+   	--output_dir "Path/to/the/output/txt/directory" \
+   	--retry 50 \ # Optional, maximum retry number
+   	--max_concurrency  # Optional, maximum concurrent requests
+   ```
+
+   By default, this script will evaluate all tasks defined in `config.py/Tasks`. You may find example usage for evaluating a specific task in `eval_results.py` line 348.
+
+3. Export the results to CSV files and generate tables
+
+   ```sh
+   python -m generate_table \
+   	--input_dir "Path/to/where/all/txt/files/stay" \
+   	--csv_file_dir "Path/to/the/target/directory/of/csv/file" \ # Optional, default to "input_dir"
+   	--table_file_dir "Path/to/the/target/directory/of/table/file"
+   ```
+
+   This will generate an `output.csv` CSV file under `csv_file_dir` and a `table.txt` file under `table_file_dir`.
+
+### Supplementary
+
+1. The QA evaluation relies on the ground truth annotation file. This is defined in `config.py` under `Tasks.QA.gt_file`. Please also modify this path for a successful evaluation.
+2. To customize your own evaluation task, please add another instance of `EvalTask` under the `Tasks` class located in the `config.py` file.
 
 ## ⭐ 6. Resources
 
