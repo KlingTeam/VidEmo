@@ -100,6 +100,8 @@ In (a), the data taxonomy organizes the dataset into three primary face percepti
 ## 🧊 4. VidEmo Family 
 
 To use the model weights, download them from Hugging Face:
+- [VidEmo-3B](https://huggingface.co/KlingTeam/VidEmo)
+- [VidEmo-7B](https://huggingface.co/KlingTeam/VidEmo)
 
 ## 🔬 5. Training & Inference & Evaluation
 
