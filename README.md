@@ -45,22 +45,25 @@
 
 
 <a href="https://arxiv.org/abs/2511.02712" target="_blank">
-    <img alt="arXiv" src="https://img.shields.io/badge/arXiv-VidEmo-red?logo=arxiv" height="25" />
+    <img alt="arXiv" src="https://img.shields.io/badge/arXiv-Kling--VidEmo-red?logo=arxiv" height="25" />
 </a>
 <a href="https://zzcheng.top/VidEmo" target="_blank">
     <img alt="Website" src="https://img.shields.io/badge/🌎_Website-Homepage-blue.svg" height="25" />
 </a>
-<a href="https://github.com/KwaiVGI/VidEmo" target="_blank">
+<a href="https://github.com/KlingTeam/VidEmo" target="_blank">
     <img alt="Github" src="https://img.shields.io/badge/⚒️_Github-Code-white.svg" height="25" />
 </a>
 <a href="https://zzcheng.top/assets/pdf/2025_NeurIPS_VidEmo_poster.pdf" target="_blank">
     <img alt="HF Dataset: Emo-CFG 2.1M" src="https://img.shields.io/badge/📅-Poster-gree.svg" height="25" />
 </a>
 <br>
-<a href="https://huggingface.co/KwaiVGI/VidEmo" target="_blank">
-    <img alt="HF Model: VidEmo Family" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-VidEmo--Family-ffc107?color=ffc107&logoColor=white" height="25" />
+<a href="https://huggingface.co/KlingTeam/VidEmo-3B" target="_blank">
+    <img alt="HF Model: VidEmo Family" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Kling--VidEmo--3B-ffc107?color=ffc107&logoColor=white" height="25" />
 </a>
-<a href="https://huggingface.co/KwaiVGI/EmoCFG" target="_blank">
+<a href="https://huggingface.co/KlingTeam/VidEmo-7B" target="_blank">
+    <img alt="HF Model: VidEmo Family" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Kling--VidEmo--7B-ffc107?color=ffc107&logoColor=white" height="25" />
+</a>
+<a href="https://huggingface.co/datasets/KlingTeam/Emo-CFG" target="_blank">
     <img alt="HF Dataset: Emo-CFG 2.1M" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Data-Emo--CFG--2.1M-ffc107?color=ffc107&logoColor=white" height="25" />
 </a>
 
@@ -117,18 +120,24 @@ TBD
 
 TBD
 
-## ⭐ 6. Star History
+## ⭐ 6. Resources
+
+### 🔮 6.1: Inference Results of SOTAs and VidEmo
+
+To align the inference results for fair comparison, we provide the original inference results.
+
+## ⭐ 7. Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=KwaiVGI/VidEmo&type=Date)](https://star-history.com/#KwaiVGI/VidEmo&Date)
 
-## 📫 7. Contact
+## 📫 8. Contact
 
 If you have any questions, please feel free to contact:
 
 - Zhicheng Zhang: gloryzzc6@sina.com
 - Weicheng Wang: 1394828098wwc@gmail.com
 
-## 🏷️ 8. Citation
+## 🏷️ 9. Citation
 
 If you find this project useful, please consider citing:
 
@@ -141,6 +150,6 @@ If you find this project useful, please consider citing:
 }
 ```
 
-## 🥰 9. Acknowledgements
+## 🥰 10. Acknowledgements
 
 This code largely borrows from [ms-swift](https://github.com/modelscope/ms-swift).
