@@ -76,9 +76,9 @@
 
 ## 📈 1. News
 
-- 🔥2025-12-01: Train and Evaluation Code released.
+- 🔥2025-12-01: Pre-computed results, inference, and evaluation code released.
 - 🔥2025-12-01: Creating repository.
-- 2025-09-18: MODA has been accepted to ICML 2025！
+- 2025-09-18: Kling-VidEmo has been accepted to NeurIPS 2025！
 
 ## ⚒️ 2. Environment Setup
 
@@ -86,44 +86,161 @@
 conda create -n VidEmo python=3.9
 conda activate VidEmo
 python -m pip install -r requirements.txt
+cd ms-swift
+python -m pip install -e .
 ```
 
 ## 💾 3. Emo-CFG Datasets
 
-**Overview of dataset**
+### 🔐 3.1 Overview of dataset
 
 <img src="assets/datastats.png" width=800 />
 </div>
 
 In (a), the data taxonomy organizes the dataset into three primary face perception tasks: Emotion Intelligence, Expression Analysis, and Attribution Perception, covering a wide range of facial features and emotional attributes. (b) The data distribution plots show the relative face area and video duration across different datasets, illustrating the diversity and variety of video data present in Emo-CFG. (c) The annotation distribution includes the breakdown of facial views (head, half, full) and video length, accompanied by a word cloud highlighting the most frequently annotated terms, such as “neutral”, “face”, and “expression”. (d) Data statistics compares Emo-CFG with other emotion and video datasets, showing that Emo-CFG provides a richer set of annotations and label types, including fine-grained emotion, rationales, and comprehensive video data, making it a unique and valuable resource for emotion-centric research.
 
-> Application should be done by uploading an EULA from our huggingface webpage.
+The `dataset` folder should be structured as follow:
 
-## 🧊 4. VidEmo Family 
+~~~~
+Emo-CFG
+├── jsons
+│   ├── curation
+│   │   ├── concat_receipt.py
+│   │   ├── v1
+│   │   │   └── source.txt
+│   │   ├── v2
+│   │   │   └── source.txt
+│   │   ├── v3
+│   │   │   └── source.txt
+│   │   ├── v4
+│   │   │   └── source.txt
+│   │   └── v5
+│   ├── test
+│   │   ├── attribute
+│   │   │   ├── full
+│   │   │   └── sampled
+│   │   ├── caption
+│   │   │   ├── full
+│   │   │   └── sampled
+│   │   ├── emotion
+│   │   │   ├── full
+│   │   │   └── sampled
+│   │   └── qa
+│   │       ├── full
+│   │       └── sampled
+│   └── train
+│       ├── attribute
+│       │   ├── full
+│       │   └── sampled
+│       ├── caption
+│       │   ├── full
+│       │   └── sampled
+│       ├── emotion
+│       │   ├── full
+│       │   └── sampled
+│       ├── qa
+│       │   ├── full
+│       │   └── sampled
+│       └── rationale
+│           ├── full
+│           └── sampled
+└── videos
+    ├── AFEW
+    ├── AffWild2
+    ├── CAER
+    ├── CASME
+    ├── CAS(ME)2
+    ├── CASME2
+    ├── CelebV-HQ
+    ├── CelebV-Text
+    ├── Dfew
+    ├── FERV39K
+    ├── MAFW
+    ├── MEAD
+    ├── MELD
+    ├── Mer2023
+    ├── MOSEI
+    ├── MOSI
+    ├── PERR
+    ├── RAVDESS
+    └── SIMS
+~~~~
+
+### 🔐 3.2 Access & License
+
+To access the dataset, you must upload a signed End User License Agreement (EULA) via our HuggingFace repository:
+
+[👉 Emo-CFG on HuggingFace](https://huggingface.co/datasets/KlingTeam/Emo-CFG)
+
+> **⚠️ Note**: The copyright of the videos remains with the original owners.
+> If you find this work useful, please consider cite our paper and the related 19 dataset resources kindly.
+
+If you find this work useful, please consider **citing our paper** and **acknowledging the 19 related dataset resources**.
+
+
+
+
+
+
+## 🔬 4. VidEmo Family
+
+
+### 🧊 4.1 Model Collection
 
 To use the model weights, download them from Hugging Face:
 - [VidEmo-3B](https://huggingface.co/KlingTeam/VidEmo)
 - [VidEmo-7B](https://huggingface.co/KlingTeam/VidEmo)
 
-## 🔬 5. Training & Inference & Evaluation
+### 🔮 4.2 Train
 
-### 🔮 5.1: Training
-
-TBD
-
-### 🔮 5.2: Inference
+##### 🧱 SFT Stage
 
 TBD
 
-### 🔮 5.3: Evaluation
+##### 🧱 RL Stage
 
-### Demonstration
+TBD
+
+### 🔮 4.3 Inference
+
+#### 📜 Scripts
+Run the following command to perform inference. 
+> **Note:** Ensure that the path variables (e.g., `${BASE_DATASET_DIR}`) are defined or replaced with your actual file paths before running.
+
+```bash
+VIDEO_MAX_PIXELS=100352 FPS_MAX_FRAMES=16 CUDA_VISIBLE_DEVICES=0 swift infer \
+    --val_dataset "${BASE_DATASET_DIR}/${TESTING_DATASET_NAME}" \
+    --ckpt_dir "${BASE_CKPT_DIR}/${TESTING_MODEL_NAME}" \
+    --result_path "${RESULT_PATH}" \
+    --infer_backend vllm \
+    --gpu_memory_utilization 0.85 \
+    --torch_dtype bfloat16 \
+    --max_new_tokens 2048 \
+    --streaming False \
+    --max_batch_size 4 \
+    --attn_impl flash_attn \
+    --limit_mm_per_prompt '{"image": 0, "video": 1}' \
+    --max_model_len 49152
+```
+
+For a complete batch processing script, please refer to `scripts/inference.sh`
+
+##### 📊 Pre-computed VidEmo and SOTA Results
+
+To facilitate fair comparison and ensure alignment with our reported metrics, we provide the original inference outputs used in our paper. Please refer to the `resutls` folder.
+
+> **Note on Evaluation**: You may use your own GPT version/API key for evaluation. We have observed that while absolute scores may vary for open-form QA data, **the relative ranking of the results remains consistent** across different GPT versions.
+
+### 🔮 4.4 Evaluation
+
+##### Demonstration
 
 ```
+eval
 ├─ config.py # GPT configuration
 ├─ eval_results.py # Evaluation scripts
 ├─ generate_table.py # CSV & table generator
-├─ util.py # Utility functions
+└─ util.py # Utility functions
 ```
 
 1. Modify the LLM configuration in `config.py`
@@ -135,7 +252,7 @@ TBD
 2. Execute the evaluation scripts
 
    ```sh
-   python -m eval_face.eval_results \
+   python -m eval.eval_results \
    	--input_dir "Path/to/the/input/directory" \
    	--method "method name, e.g. models--Qwen--Qwen2.5-VL-7B-Instruct" \
    	--output_dir "Path/to/the/output/txt/directory" \
@@ -143,12 +260,12 @@ TBD
    	--max_concurrency  # Optional, maximum concurrent requests
    ```
 
-   By default, this script will evaluate all tasks defined in `config.py/Tasks`. You may find example usage for evaluating a specific task in `eval_results.py` line 348.
+   By default, this script will evaluate all tasks defined in `config.py Class Tasks`. You may find example usage for evaluating a specific task in `eval_results.py` line 348.
 
 3. Export the results to CSV files and generate tables
 
    ```sh
-   python -m generate_table \
+   python -m eval.generate_table \
    	--input_dir "Path/to/where/all/txt/files/stay" \
    	--csv_file_dir "Path/to/the/target/directory/of/csv/file" \ # Optional, default to "input_dir"
    	--table_file_dir "Path/to/the/target/directory/of/table/file"
@@ -156,29 +273,24 @@ TBD
 
    This will generate an `output.csv` CSV file under `csv_file_dir` and a `table.txt` file under `table_file_dir`.
 
-### Supplementary
+##### Notes
 
 1. The QA evaluation relies on the ground truth annotation file. This is defined in `config.py` under `Tasks.QA.gt_file`. Please also modify this path for a successful evaluation.
 2. To customize your own evaluation task, please add another instance of `EvalTask` under the `Tasks` class located in the `config.py` file.
 
-## ⭐ 6. Resources
 
-### 🔮 6.1: Inference Results of SOTAs and VidEmo
-
-To align the inference results for fair comparison, we provide the original inference results.
-
-## ⭐ 7. Star History
+## ⭐ 5. Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=KwaiVGI/VidEmo&type=Date)](https://star-history.com/#KwaiVGI/VidEmo&Date)
 
-## 📫 8. Contact
+## 📫 6. Contact
 
 If you have any questions, please feel free to contact:
 
 - Zhicheng Zhang: gloryzzc6@sina.com
 - Weicheng Wang: 1394828098wwc@gmail.com
 
-## 🏷️ 9. Citation
+## 🏷️ 7. Citation
 
 If you find this project useful, please consider citing:
 
@@ -187,10 +299,18 @@ If you find this project useful, please consider citing:
   author = {Zhang, Zhicheng and Wang, Weicheng and Zhu, Yongjie and Qin, Wenyu and Wan, Pengfei and Zhang, Di and Yang, Jufeng},
   title = {VidEmo: Affective-Tree Reasoning for Emotion-Centric Video Foundation Models},
   booktitle = {Advances in Neural Information Processing Systems},
-  year = {2025},
+  year = {2025}
 }
 ```
 
-## 🥰 10. Acknowledgements
+## 🥰 8. Acknowledgements
 
-This code largely borrows from [ms-swift](https://github.com/modelscope/ms-swift).
+This project stands on the shoulders of giants. We deeply appreciate the [ms-swift](https://github.com/modelscope/ms-swift) library for their excellent codebase. Our dataset is constructed based on the following foundational resources in affective computing. We sincerely thank the authors of these datasets:
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| **AFEW** | **AffWild2** | **CAER** | **CASME** |
+| **CAS(ME)²** | **CASME2** | **CelebV-HQ** | **CelebV-Text** |
+| **DFEW** | **FERV39K** | **MAFW** | **MEAD** |
+| **MELD** | **MER2023** | **MOSEI** | **MOSI** |
+| **PERR** | **RAVDESS** | **SIMS** | |
