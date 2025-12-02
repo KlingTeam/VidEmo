@@ -173,9 +173,7 @@ To access the dataset, you must upload a signed End User License Agreement (EULA
 [👉 Emo-CFG on HuggingFace](https://huggingface.co/datasets/KlingTeam/Emo-CFG)
 
 > **⚠️ Note**: The copyright of the videos remains with the original owners.
-> If you find this work useful, please consider cite our paper and the related 19 dataset resources kindly.
-
-If you find this work useful, please consider **citing our paper** and **acknowledging the 19 related dataset resources**.
+> If you find this work useful, please consider **cite our paper** and **acknowledging the related dataset resources** kindly.
 
 
 
