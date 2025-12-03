@@ -305,9 +305,8 @@ If you find this project useful, please consider citing:
 
 This project stands on the shoulders of giants. We deeply appreciate the [ms-swift](https://github.com/modelscope/ms-swift) library for their excellent codebase. Our dataset is constructed based on the following foundational resources in affective computing. We sincerely thank the authors of these datasets:
 
-| | | | |
-| :--- | :--- | :--- | :--- |
 | **AFEW** | **AffWild2** | **CAER** | **CASME** |
+| :--- | :--- | :--- | :--- |
 | **CAS(ME)²** | **CASME2** | **CelebV-HQ** | **CelebV-Text** |
 | **DFEW** | **FERV39K** | **MAFW** | **MEAD** |
 | **MELD** | **MER2023** | **MOSEI** | **MOSI** |
