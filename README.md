@@ -186,8 +186,8 @@ To access the dataset, you must upload a signed End User License Agreement (EULA
 ### 🧊 4.1 Model Collection
 
 To use the model weights, download them from Hugging Face:
-- [VidEmo-3B](https://huggingface.co/KlingTeam/VidEmo)
-- [VidEmo-7B](https://huggingface.co/KlingTeam/VidEmo)
+- [VidEmo-3B](https://huggingface.co/KlingTeam/VidEmo-3B)
+- [VidEmo-7B](https://huggingface.co/KlingTeam/VidEmo-7B)
 
 ### 🔮 4.2 Train
 
