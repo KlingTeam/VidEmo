@@ -1,3 +1,5 @@
+from typing import List
+
 from dataclasses import dataclass, field
 
 
@@ -37,7 +39,7 @@ class EvalTaskMultiClass(EvalTask):
     - `classes`: used for the calculation of f1 score
     """
 
-    classes: list[str]
+    classes: List[str]
 
 
 @dataclass(kw_only=True)
@@ -50,7 +52,7 @@ class EvalTaskQA(EvalTask):
     """
 
     gt_file: str
-    attributes: list[str]
+    attributes: List[str]
 
 
 class PromptTemplate:
