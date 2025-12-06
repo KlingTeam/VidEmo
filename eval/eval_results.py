@@ -1,13 +1,13 @@
-import asyncio
 import argparse
+import asyncio
 
 import json
 import logging
 import os
 
-from typing import Any
-from pathlib import Path
 from functools import partial
+from pathlib import Path
+from typing import Any, Dict, List
 
 from sklearn.metrics import f1_score
 from sklearn.preprocessing import MultiLabelBinarizer
@@ -38,7 +38,7 @@ def read_json_qa_gt(gt_file: str):
 
 
 # A patch to filter json results based on attribute name in qa eval
-def filter_src_data_qa(src_data: dict[str, Any], gt_data: dict[str, Any], attribute: str):
+def filter_src_data_qa(src_data: Dict[str, Any], gt_data: Dict[str, Any], attribute: str):
     messages = src_data.get("messages", [])
     videos = src_data.get("videos", [""])
     video_path = videos[0]
@@ -56,7 +56,7 @@ def filter_src_data_qa(src_data: dict[str, Any], gt_data: dict[str, Any], attrib
 
 # A patch for caption evaluation. Directly integrating this function serves no benefits.
 def result_evaluate_caption(
-    results: list[str],
+    results: List[str],
     output_file: Path,
     methodname: str,
     filename: str,
@@ -165,7 +165,7 @@ class EvaluationPipeline:
 
         return src_data
 
-    def calculate_f1(self, true_label, pred_label, classes: list[str]):
+    def calculate_f1(self, true_label, pred_label, classes: List[str]):
         if self.task_metadata is Tasks.AFF or self.task_metadata is Tasks.CELEBVHQ_APPEARANCE or self.task_metadata is Tasks.CELEBVHQ_ACTION:
             # These tasks require additional handling
             if pred_label.lower() != "none":
@@ -187,7 +187,7 @@ class EvaluationPipeline:
 
         return f1_micro * 100
 
-    async def get_response(self, idx: int, data: dict[str, Any]):
+    async def get_response(self, idx: int, data: Dict[str, Any]):
         self.logger.info(f"Start processing request {idx}")
         answer = data["response"]
         labels = data["labels"]
@@ -212,7 +212,7 @@ class EvaluationPipeline:
             return str(res)
         return res
 
-    async def eval_single(self, idx: int, data: dict[str, Any], sem: asyncio.Semaphore):
+    async def eval_single(self, idx: int, data: Dict[str, Any], sem: asyncio.Semaphore):
         async with sem:
             for i in range(self.retry):
                 try:
@@ -274,9 +274,17 @@ class EvaluationPipeline:
     async def evaluate(self):
         sem = asyncio.Semaphore(self.max_concurrency)
 
-        async with asyncio.TaskGroup() as tg:
-            for idx, data in enumerate(self.src_data):
-                tg.create_task(self.eval_single(idx, data, sem))
+        tasks = []
+        for idx, data in enumerate(self.src_data):
+            task = asyncio.create_task(self.eval_single(idx, data, sem))
+            tasks.append(task)
+
+        await asyncio.gather(*tasks)
+
+        # You may replace the above with asyncio.TaskGroup if your Python version is 3.11+
+        # async with asyncio.TaskGroup() as tg:
+        #     for idx, data in enumerate(self.src_data):
+        #         tg.create_task(self.eval_single(idx, data, sem))
 
     def execute(self):
         self.logger.info(f"Testing on {self.task_metadata.task_name}")
@@ -297,6 +305,8 @@ class EvaluationPipeline:
 
                 self.output_file = self.output_dir / f"{self.file}_{attribute}.txt"
                 self.result_evaluate()
+                # Since we manually filter the src data, we need to clear the results
+                # in case of duplicate result evaluation
                 self.results.clear()
 
             return
@@ -316,7 +326,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output_dir",
         help="output directory",
-        default="eval_face_integrate/results",
+        default="eval/results",
         type=str,
     )
     parser.add_argument(
