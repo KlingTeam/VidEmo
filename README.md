@@ -43,6 +43,9 @@
 
 
 
+<a href="https://github.com/nku-zhichengzhang/Awesome-emotion_llm_and_mllm" target="_blank">
+    <img alt="Awesome" src="https://awesome.re/badge.svg" height="25" />
+</a>
 <a href="https://arxiv.org/abs/2511.02712" target="_blank">
     <img alt="arXiv" src="https://img.shields.io/badge/arXiv-Kling--VidEmo-red?logo=arxiv" height="25" />
 </a>
