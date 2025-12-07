@@ -283,7 +283,7 @@ eval
 
 ## ⭐ 5. Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=KwaiVGI/VidEmo&type=Date)](https://star-history.com/#KwaiVGI/VidEmo&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=KlingTeam/VidEmo&type=Date)](https://star-history.com/#KlingTeam/VidEmo&Date)
 
 ## 📫 6. Contact
 
