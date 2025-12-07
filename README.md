@@ -43,9 +43,7 @@
 
 
 
-<a href="https://github.com/nku-zhichengzhang/Awesome-emotion_llm_and_mllm" target="_blank">
-    <img alt="Awesome" src="https://awesome.re/badge.svg" height="25" />
-</a>
+
 <a href="https://arxiv.org/abs/2511.02712" target="_blank">
     <img alt="arXiv" src="https://img.shields.io/badge/arXiv-Kling--VidEmo-red?logo=arxiv" height="25" />
 </a>
@@ -54,6 +52,9 @@
 </a>
 <a href="https://github.com/KlingTeam/VidEmo" target="_blank">
     <img alt="Github" src="https://img.shields.io/badge/⚒️_Github-Code-white.svg" height="25" />
+</a>
+<a href="https://github.com/nku-zhichengzhang/Awesome-emotion_llm_and_mllm" target="_blank">
+    <img alt="Awesome" src="https://awesome.re/badge.svg" height="25" />
 </a>
 <a href="https://zzcheng.top/assets/pdf/2025_NeurIPS_VidEmo_poster.pdf" target="_blank">
     <img alt="HF Dataset: Emo-CFG 2.1M" src="https://img.shields.io/badge/📅-Poster-gree.svg" height="25" />
